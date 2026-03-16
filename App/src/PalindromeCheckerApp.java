@@ -1,27 +1,22 @@
-import java.util.Scanner;
-import java.util.Deque;
 import java.util.LinkedList;
 
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
+        String input = "level";
 
-        System.out.print("Enter a string: ");
-        String input = sc.nextLine();
+        LinkedList<Character> list = new LinkedList<>();
 
-        Deque<Character> deque = new LinkedList<>();
-
-        for (int i = 0; i < input.length(); i++) {
-            deque.addLast(input.charAt(i));
+        for (char c : input.toCharArray()) {
+            list.add(c);
         }
 
         boolean isPalindrome = true;
 
-        while (deque.size() > 1) {
-            char first = deque.removeFirst();
-            char last = deque.removeLast();
+        while (list.size() > 1) {
+            char first = list.removeFirst();
+            char last = list.removeLast();
 
             if (first != last) {
                 isPalindrome = false;
@@ -34,7 +29,5 @@ public class PalindromeCheckerApp {
         } else {
             System.out.println("The given string is NOT a Palindrome.");
         }
-
-        sc.close();
     }
 }
