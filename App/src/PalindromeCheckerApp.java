@@ -3,13 +3,24 @@ import java.util.Stack;
 import java.util.Deque;
 import java.util.LinkedList;
 
-interface PalindromeStrategy {
-    boolean checkPalindrome(String input);
-}
+public class PalindromeCheckerApp {
 
-class StackStrategy implements PalindromeStrategy {
+    public static boolean arrayPalindrome(String input) {
+        char[] arr = input.toCharArray();
+        int start = 0;
+        int end = arr.length - 1;
 
-    public boolean checkPalindrome(String input) {
+        while (start < end) {
+            if (arr[start] != arr[end]) {
+                return false;
+            }
+            start++;
+            end--;
+        }
+        return true;
+    }
+
+    public static boolean stackPalindrome(String input) {
         Stack<Character> stack = new Stack<>();
 
         for (char c : input.toCharArray()) {
@@ -23,11 +34,8 @@ class StackStrategy implements PalindromeStrategy {
         }
         return true;
     }
-}
 
-class DequeStrategy implements PalindromeStrategy {
-
-    public boolean checkPalindrome(String input) {
+    public static boolean dequePalindrome(String input) {
         Deque<Character> deque = new LinkedList<>();
 
         for (char c : input.toCharArray()) {
@@ -41,9 +49,6 @@ class DequeStrategy implements PalindromeStrategy {
         }
         return true;
     }
-}
-
-public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
@@ -52,24 +57,21 @@ public class PalindromeCheckerApp {
         System.out.print("Enter a string: ");
         String input = sc.nextLine();
 
-        PalindromeStrategy strategy;
+        long start1 = System.nanoTime();
+        boolean result1 = arrayPalindrome(input);
+        long end1 = System.nanoTime();
 
-        System.out.print("Choose strategy (1-Stack, 2-Deque): ");
-        int choice = sc.nextInt();
+        long start2 = System.nanoTime();
+        boolean result2 = stackPalindrome(input);
+        long end2 = System.nanoTime();
 
-        if (choice == 1) {
-            strategy = new StackStrategy();
-        } else {
-            strategy = new DequeStrategy();
-        }
+        long start3 = System.nanoTime();
+        boolean result3 = dequePalindrome(input);
+        long end3 = System.nanoTime();
 
-        boolean result = strategy.checkPalindrome(input);
-
-        if (result) {
-            System.out.println("The given string is a Palindrome.");
-        } else {
-            System.out.println("The given string is NOT a Palindrome.");
-        }
+        System.out.println("Array Method Result: " + result1 + " Time: " + (end1 - start1) + " ns");
+        System.out.println("Stack Method Result: " + result2 + " Time: " + (end2 - start2) + " ns");
+        System.out.println("Deque Method Result: " + result3 + " Time: " + (end3 - start3) + " ns");
 
         sc.close();
     }
